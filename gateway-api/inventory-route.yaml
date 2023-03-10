@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: HTTPRoute
+metadata:
+  name: kubecon-inventory
+spec:
+  hostnames:
+    - inventory.liwen-kubecon-demo.com  
+  parentRefs:
+  - name: kubecon-demo
+    sectionName: http 
+  rules:
+  - backendRefs:  
+    - name: inventory-v1
+      kind: Service
+      port: 8090
+      weight: 10

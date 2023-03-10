@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews
+  labels:
+    app: reviews
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reviews
+  template:
+    metadata:
+      labels:
+        app: reviews
+    spec:
+      containers:
+      - name: reviews
+        image: public.ecr.aws/x2j8p8w7/http-server:latest
+        env:
+        - name: PodName
+          value: "reviews handler pod" 
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews
+spec:
+  selector:
+    app: reviews
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8090
